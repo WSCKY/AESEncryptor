@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.Date;
 import java.util.List;
+import java.util.prefs.Preferences;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
@@ -155,11 +156,21 @@ public class MainFrame extends JFrame {
 			FileChoose = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("binary file(*.bin)", "bin");//("binary file(*.bin;*.txt)", "bin", "txt");
 			FileChoose.setFileFilter(filter);
-			FileChoose.setCurrentDirectory(fsv.getHomeDirectory());
+			Preferences pref = Preferences.userRoot().node(this.getClass().getName());
+			String lastPath = pref.get("lastPath", "");//get it from System registry.
+			if(!lastPath.equals("")) {
+				File LastFilePath = new File(lastPath);
+				if(LastFilePath.exists())
+					FileChoose.setCurrentDirectory(new File(lastPath));
+				else
+					FileChoose.setCurrentDirectory(fsv.getHomeDirectory());
+			} else
+				FileChoose.setCurrentDirectory(fsv.getHomeDirectory());
 //			FileChoose.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			int ret = FileChoose.showDialog(null, "Choose");
 			if(ret == JFileChooser.APPROVE_OPTION ) {
 				File file = FileChoose.getSelectedFile();
+				pref.put("lastPath", file.getParent()); //Save it to System registry.
 				String prefix = file.getName().substring(file.getName().lastIndexOf("."));
 				if(prefix.equals(".bin")) {
 					if(FileNameRegular.IsValidName(file.getName(), ".bin")) {
