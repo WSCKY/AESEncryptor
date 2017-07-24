@@ -39,15 +39,13 @@ public class FileNameRegular {
 		if(m.find()) {
 			String ver = m.group();
 			if(p.matcher(ver).matches()) {
-				major = (byte)(ver.getBytes()[0] - '0');
+				major = Byte.valueOf(ver.substring(0, ver.indexOf('.')));
 //				System.out.println("major = " + major);
-				minor = (byte)(ver.getBytes()[2] - '0');
+				minor = Byte.valueOf(ver.substring(ver.indexOf('.') + 1, ver.lastIndexOf('.')));
 //				System.out.println("minor = " + minor);
-				fix   = (byte)(ver.getBytes()[4] - '0');
+				fix = Byte.valueOf(ver.substring(ver.lastIndexOf('.') + 1));
 //				System.out.println("fix = " + fix);
 				v = (char)((((char)major & 0x0F) << 12) | (((char)minor & 0x0F) << 8) | (((char)fix & 0xFF) << 0));
-//				int x = (int)v;
-//				System.out.println("v = " + x);
 			}
 		}
 		return v;
@@ -75,7 +73,7 @@ public class FileNameRegular {
 ////			if(p.matcher(m.group()).matches())
 ////				System.out.println(m.group() + " ");
 ////		}
-//		getVersion("PartnerX_F4_V1.0.1_2017_06_06");
+//		System.out.println("version = " + (int)getVersion("PartnerX_F4_V12.10.8_2017_06_06"));
 //		getDate("PartnerX_F4_V1.0.1_2017_10_06");
 ////		while(m.find()) {
 ////			System.out.print(m.group() + " ");
