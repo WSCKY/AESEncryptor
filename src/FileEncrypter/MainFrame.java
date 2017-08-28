@@ -107,7 +107,7 @@ public class MainFrame extends JFrame {
 		this.setSize(610, 106);
 		this.setLocationRelativeTo(null);//center of screen.
 		this.setIconImage(getToolkit().getImage(MainFrame.class.getResource("FileEncrypt.png")));
-		this.setResizable(false);
+//		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
