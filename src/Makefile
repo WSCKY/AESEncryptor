@@ -1,19 +1,17 @@
-Project = FileEncrypter
-MainEntry = MainFrame
-SourceFile = $(wildcard $(Project)/$(MainEntry).java)
+Project ?= FileEncrypter
+MainEntry ?= MainFrame
+BinaryPath ?= ../bin
 
-.PHONY: all clean
+SourceFile = $(Project)/$(MainEntry).java
+
 all: $(SourceFile)
-	@echo "Compile $(Project) ..."
-#	@echo $(shell pwd)
-	@echo "Create Output Directory ..."
-	@mkdir ../bin/$(Project)/
-	@echo "Copy Image File(s) ..."
-	@cp ../ImgSource/* ../bin/$(Project)/
-	@echo "Build $< ..."
-	@javac -d ../bin/ $<
-	@echo "Launch Application ..."
-	@cd ../bin/ && java $(basename $<)
-clean:
-	rm -rf ../bin/*
+	$(ECHO) "Compile $(Project)..."
+	$(ECHO) "Create Output Directory..."
+	$(MKDIR) -p ../bin/$(Project)/
+	$(ECHO) "Copy Image File(s)..."
+	$(CP) ../ImgSource/* ../bin/$(Project)/
+	$(ECHO) "Build $<..."
+	$(JAVAC) -g -d ../bin/ $<
+	$(ECHO) "Launch Application..."
+	$(JAVA) -cp $(BinaryPath) $(basename $<)
 
