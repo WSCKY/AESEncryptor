@@ -1,17 +1,17 @@
 Project ?= FileEncrypter
 MainEntry ?= MainFrame
+
 BinaryPath ?= ../bin
+ImagePath ?= ImgSource
 
 SourceFile = $(Project)/$(MainEntry).java
 
 all: $(SourceFile)
 	$(ECHO) "Compile $(Project)..."
 	$(ECHO) "Create Output Directory..."
-	$(MKDIR) -p ../bin/$(Project)/
+	$(MKDIR) -p $(BinaryPath)/$(Project)/
 	$(ECHO) "Copy Image File(s)..."
-	$(CP) ../ImgSource/* ../bin/$(Project)/
+	$(CP) $(ImagePath)/* $(BinaryPath)/$(Project)/
 	$(ECHO) "Build $<..."
-	$(JAVAC) -g -d ../bin/ $<
-	$(ECHO) "Launch Application..."
-	$(JAVA) -cp $(BinaryPath) $(basename $<)
+	$(JAVAC) -g -d $(BinaryPath) $<
 
