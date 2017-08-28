@@ -55,6 +55,8 @@ public class MainFrame extends JFrame {
 	private static final byte Minor = 0;
 	private static final byte FixNumber = 0;
 
+	private static String _System_Type = "Windows";
+
 	private JPanel NorthPanel = null;
 	private JPanel SouthPanel = null;
 
@@ -75,7 +77,12 @@ public class MainFrame extends JFrame {
 
 		src_info = new JLabel("src:");
 		src_info.setFont(new Font("Courier New", Font.BOLD, 20));
-		src_txt = new JTextField(40);
+		if(_System_Type.equals("Linux"))
+			src_txt = new JTextField(40);
+		else if(_System_Type.equals("Windows"))
+			src_txt = new JTextField(40);
+		else
+			src_txt = new JTextField(40);
 		src_txt.setFont(new Font("Courier New", Font.BOLD, 20));
 		src_txt.setEditable(false);
 		src_txt.setToolTipText("file path");
@@ -107,7 +114,7 @@ public class MainFrame extends JFrame {
 		this.setSize(610, 106);
 		this.setLocationRelativeTo(null);//center of screen.
 		this.setIconImage(getToolkit().getImage(MainFrame.class.getResource("FileEncrypt.png")));
-//		this.setResizable(false);
+		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
@@ -256,6 +263,11 @@ public class MainFrame extends JFrame {
 	};
 
 	public static void main(String[] args) {
+		String OsName = System.getProperty("os.name");
+		if(OsName.startsWith("Windows"))
+			_System_Type = "Windows";
+		else if(OsName.startsWith("Linux"))
+			_System_Type = "Linux";
 		new MainFrame();
 	}
 }
