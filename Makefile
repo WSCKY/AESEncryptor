@@ -63,5 +63,6 @@ $(Launch): $(MainProj)
 
 .PHONY: clean
 clean:
-	$(ECHO) "Delete Binary Files."
-	$(RM) -rf $(BinaryDIR)/*
+	$(ECHO) "Delete Output Files."
+	$(RM) -rf $(BinaryDIR)/$(Projects)
+	$(RM) -rf $(BinaryDIR)/$(Projects).jar
