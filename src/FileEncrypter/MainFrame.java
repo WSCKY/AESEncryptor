@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final byte Major = 1;
-	private static final byte Minor = 0;
+	private static final byte Minor = 1;
 	private static final byte FixNumber = 0;
 
 	private static String _System_Type = "Windows";
