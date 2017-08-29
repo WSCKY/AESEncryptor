@@ -47,7 +47,8 @@ export ECHO
 export MAKE
 export CAT
 
-all: $(MainProj) $(JarFile) $(Launch)
+all: $(MainProj)
+# $(JarFile) $(Launch)
 
 $(JarFile): $(MainProj)
 	$(ECHO) "Generate jar File..."
