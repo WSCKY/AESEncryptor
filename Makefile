@@ -5,10 +5,6 @@ else
 Q = @
 endif
 
-#Project
-ProjectName = FileEncrypter
-MainClass = MainFrame
-
 # Commands
 JAVAC          = $(Q)javac
 JAVA           = $(Q)java
@@ -21,16 +17,20 @@ ECHO           = $(Q)@echo
 MAKE           = $(Q)make
 CAT            = $(Q)cat
 
+# Projects
+Projects ?= FileEncrypter
+
 # Targets
-MainProj = class
+MainProj = $(addsuffix .kyproj, $(Projects))
 JarFile = jar
 Launch = launch
 
 # Directories
 TOP_DIR=$(shell pwd)
-SourceDIR = $(TOP_DIR)/src/
-BinaryDIR = $(TOP_DIR)/bin/
-ImagesDIR = $(TOP_DIR)/src/ImgSource/
+SourceDIR = $(TOP_DIR)/src
+BinaryDIR = $(TOP_DIR)/bin
+
+include $(SourceDIR)/$(Projects)/config.mk
 
 # Scripts
 JAR_GEN = jar_gen.mk
@@ -52,14 +52,14 @@ all: $(MainProj) $(JarFile) $(Launch)
 $(JarFile): $(MainProj)
 	$(ECHO) "Generate jar File..."
 	$(CP) $(JAR_GEN) $(BinaryDIR)
-	$(MAKE) -C $(BinaryDIR) -f $(JAR_GEN) Project=$(ProjectName)
+	$(MAKE) -C $(BinaryDIR) -f $(JAR_GEN) Project=$(basename $<)
 
 $(Launch): $(MainProj)
 	$(ECHO) "Launch Application..."
-	$(JAVA) -cp $(BinaryDIR) $(ProjectName)/$(MainClass)
+	$(JAVA) -cp $(BinaryDIR) $(basename $<)/$(MainClass)
 
-$(MainProj):
-	$(MAKE) -C $(SourceDIR) BinaryPath=$(BinaryDIR) ImagePath=$(ImagesDIR) Project=$(ProjectName) MainEntry=$(MainClass)
+%.kyproj:
+	$(MAKE) -C $(SourceDIR)/$(basename $@) BinaryPath=$(BinaryDIR)
 
 .PHONY: clean
 clean:
